@@ -1,6 +1,6 @@
 import serial
 
-bascula = serial.Serial('COM3')
+bascula = serial.Serial('/dev/ttyUSB0')
 peso = bascula.readline()
 print(str(peso))
 
