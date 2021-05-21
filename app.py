@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def leer_bascula():
     try:
-        bascula = serial.Serial('COM3')
+        bascula = serial.Serial('/dev/ttyAMA0')
         peso = bascula.readline()
         bascula.close()
         peso = peso.decode("utf-8")
