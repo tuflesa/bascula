@@ -1,8 +1,10 @@
 from flask import Flask
 from flask import jsonify
+from flask_cors import CORS
 import serial
 
 app = Flask(__name__)
+CORS(app)
 
 def leer_bascula():
     try:
