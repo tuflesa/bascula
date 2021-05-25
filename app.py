@@ -1,22 +1,39 @@
 from flask import Flask
 from flask import jsonify
-from flask_cors import CORS
+from threading import Thread
 import serial
 
 app = Flask(__name__)
-CORS(app)
 
-def leer_bascula():
+thread = None
+
+def serialThread():
+    global peso
+    
+    peso = 0
+    serialOK = True
+
     try:
-        bascula = serial.Serial('/dev/ttyUSB0', timeout=2)
-        peso = bascula.readline()
-        bascula.close()
-        peso = peso.decode("utf-8")
-        peso = int(peso[2:9])
+        bascula = serial.Serial('/dev/ttyUSB0', timeout=1)
     except:
-        peso = 'Error de lectura de bascula'
-    return peso
+        serialOK = False
 
-@app.route("/")
-def bascula():
-    return jsonify({'peso': leer_bascula()})
+    while (True):
+        if serialOK:
+            lectura = bascula.readline()
+            lectura = lectura.decode("utf-8")
+            peso = int(lectura[2:9])
+        else:
+            peso = 'Error de puerto serie'
+
+@app.route('/')
+def index():
+    global thread
+    global peso
+
+    if thread is None:
+        thread = Thread(target=serialThread)
+        thread.daemon = True
+        thread.start()
+
+    return jsonify({'peso':peso })
