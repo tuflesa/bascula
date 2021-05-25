@@ -22,9 +22,12 @@ def serialThread():
 
     while (True):
         if serialOK:
-            lectura = bascula.readline()
-            lectura = lectura.decode("utf-8")
-            peso = int(lectura[2:9])
+            try:
+                lectura = bascula.readline()
+                lectura = lectura.decode("utf-8")
+                peso = int(lectura[2:9])
+            except:
+                peso = 'Error de lectura'
         else:
             peso = 'Error de puerto serie'
 
