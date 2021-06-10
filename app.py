@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_cors import CORS
 from threading import Thread
 import serial
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +26,7 @@ def serialThread():
             lectura = bascula.readline()
             lectura = lectura.decode("utf-8")
             peso = int(lectura[2:9])
-            
+            time.sleep(1)
         else:
             peso = 'Error de puerto serie'
 
