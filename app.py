@@ -26,9 +26,10 @@ def serialThread():
             lectura = bascula.readline()
             lectura = lectura.decode("utf-8")
             peso = int(lectura[2:9])
-            time.sleep(1)
         else:
             peso = 'Error de puerto serie'
+            
+        time.sleep(2)
 
 @app.route('/')
 def index():
