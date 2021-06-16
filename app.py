@@ -29,7 +29,7 @@ def serialThread():
         else:
             peso = 'Error de puerto serie'
             
-        time.sleep(2)
+        time.sleep(1)
 
 @app.route('/')
 def index():
